@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-7">
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-4">
+                <h4 class="mb-4 text-center">Transfer Money</h4>
+                
+                <div class="alert alert-info d-flex justify-content-between">
+                    <span><strong>Your Account:</strong> {{ account.account_number }}</span>
+                    <span><strong>Available Balance:</strong> ₹{{ "{:,.2f}".format(account.balance) }}</span>
+                </div>
+                
+                <form method="POST" action="{{ url_for('customer.transfer') }}" onsubmit="return validateTransfer({{ account.balance }}, '{{ account.account_number }}')">
+                    <div class="mb-3">
+                        <label for="receiver_account_number" class="form-label">Receiver Account Number</label>
+                        <input type="text" class="form-control form-control-lg" id="receiver_account_number" name="receiver_account_number" required placeholder="Enter 10-digit account number">
+                        <div class="form-text text-danger d-none" id="accountError">You cannot transfer to your own account.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="amount" class="form-label">Amount (₹)</label>
+                        <input type="number" class="form-control form-control-lg" id="amount" name="amount" min="1" step="0.01" required placeholder="Enter amount to transfer">
+                        <div class="form-text text-danger d-none" id="amountError">Insufficient balance for this transfer.</div>
+                    </div>
+                    <div class="mb-4">
+                        <label for="description" class="form-label">Description / Remarks (Optional)</label>
+                        <input type="text" class="form-control" id="description" name="description" placeholder="e.g. Payment for dinner">
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary btn-lg" {% if account.status != 'Active' %}disabled{% endif %}>
+                            Transfer Money
+                        </button>
+                        <a href="{{ url_for('customer.dashboard') }}" class="btn btn-outline-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

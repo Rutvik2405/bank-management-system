@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-4">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h4 class="mb-0">Account Details</h4>
+                    <a href="{{ url_for('customer.dashboard') }}" class="btn btn-outline-secondary btn-sm">Back to Dashboard</a>
+                </div>
+                
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <th class="w-25 bg-light">Account Number</th>
+                            <td class="fs-5 font-monospace">{{ account.account_number }}</td>
+                        </tr>
+                        <tr>
+                            <th class="bg-light">Customer Name</th>
+                            <td>{{ g.user.full_name }}</td>
+                        </tr>
+                        <tr>
+                            <th class="bg-light">Email Address</th>
+                            <td>{{ g.user.email }}</td>
+                        </tr>
+                        <tr>
+                            <th class="bg-light">Phone Number</th>
+                            <td>{{ g.user.phone }}</td>
+                        </tr>
+                        <tr>
+                            <th class="bg-light">Account Type</th>
+                            <td>{{ account.account_type }}</td>
+                        </tr>
+                        <tr>
+                            <th class="bg-light">Current Balance</th>
+                            <td class="fw-bold fs-5 text-success">₹{{ "{:,.2f}".format(account.balance) }}</td>
+                        </tr>
+                        <tr>
+                            <th class="bg-light">Account Status</th>
+                            <td>
+                                {% if account.status == 'Active' %}
+                                    <span class="badge bg-success">Active</span>
+                                {% elif account.status == 'Blocked' %}
+                                    <span class="badge bg-danger">Blocked</span>
+                                {% else %}
+                                    <span class="badge bg-secondary">{{ account.status }}</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="bg-light">Account Creation Date</th>
+                            <td>{{ account.created_at.strftime('%B %d, %Y') }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

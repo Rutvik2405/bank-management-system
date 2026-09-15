@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-12">
+        <h3 class="fw-bold">Admin Dashboard</h3>
+        <p class="text-muted">Overview of the entire bank operations</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="card shadow-sm border-0 bg-primary text-white h-100">
+            <div class="card-body p-4 text-center">
+                <h6 class="text-uppercase text-white-50">Total Customers</h6>
+                <h2 class="display-4 fw-bold mb-0">{{ stats.total_customers }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card shadow-sm border-0 bg-info text-white h-100">
+            <div class="card-body p-4 text-center">
+                <h6 class="text-uppercase text-white-50">Total Accounts</h6>
+                <h2 class="display-4 fw-bold mb-0">{{ stats.total_accounts }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card shadow-sm border-0 bg-success text-white h-100">
+            <div class="card-body p-4 text-center">
+                <h6 class="text-uppercase text-white-50">Total Bank Balance</h6>
+                <h2 class="display-5 fw-bold mb-0">₹{{ "{:,.2f}".format(stats.total_balance) }}</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-body p-4 text-center">
+                <h6 class="text-uppercase text-muted">Total Deposits Volume</h6>
+                <h3 class="fw-bold text-success mb-0">₹{{ "{:,.2f}".format(stats.total_deposits) }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-body p-4 text-center">
+                <h6 class="text-uppercase text-muted">Total Withdrawals Volume</h6>
+                <h3 class="fw-bold text-danger mb-0">₹{{ "{:,.2f}".format(stats.total_withdrawals) }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-body p-4 text-center">
+                <h6 class="text-uppercase text-muted">Total Transfers Volume</h6>
+                <h3 class="fw-bold text-primary mb-0">₹{{ "{:,.2f}".format(stats.total_transfers) }}</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-3">
+    <div class="col-md-6">
+        <a href="{{ url_for('admin.customers') }}" class="btn btn-outline-primary btn-lg w-100 p-3">Manage Customers</a>
+    </div>
+    <div class="col-md-6">
+        <a href="{{ url_for('admin.transactions') }}" class="btn btn-outline-secondary btn-lg w-100 p-3">View All Transactions</a>
+    </div>
+</div>
+{% endblock %}

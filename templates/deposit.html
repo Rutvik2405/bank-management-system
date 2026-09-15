@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-4">
+                <h4 class="mb-4 text-center">Deposit Money</h4>
+                
+                <div class="alert alert-info">
+                    <strong>Current Balance:</strong> ₹{{ "{:,.2f}".format(account.balance) }}
+                </div>
+                
+                <form method="POST" action="{{ url_for('customer.deposit') }}">
+                    <div class="mb-3">
+                        <label for="amount" class="form-label">Amount (₹)</label>
+                        <input type="number" class="form-control form-control-lg" id="amount" name="amount" min="1" step="0.01" required placeholder="Enter amount to deposit">
+                    </div>
+                    <div class="mb-4">
+                        <label for="description" class="form-label">Description (Optional)</label>
+                        <input type="text" class="form-control" id="description" name="description" placeholder="e.g. Salary, Pocket Money">
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-success btn-lg" {% if account.status != 'Active' %}disabled{% endif %}>
+                            Deposit Money
+                        </button>
+                        <a href="{{ url_for('customer.dashboard') }}" class="btn btn-outline-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
